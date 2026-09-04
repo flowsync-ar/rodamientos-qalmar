@@ -22,8 +22,11 @@ export default function PublicError({ error, reset }: ErrorProps) {
         <p className="text-muted-foreground text-sm max-w-md">
           Ocurrió un error inesperado. Por favor intentá de nuevo o volvé al catálogo.
         </p>
-        {process.env.NODE_ENV === 'development' && (
-          <p className="text-xs text-red-500 font-mono mt-2">{error.message}</p>
+        {process.env.NODE_ENV === 'development' && error.message && (
+          <p className="text-xs text-red-500 font-mono mt-2 break-all">{error.message}</p>
+        )}
+        {process.env.NODE_ENV === 'development' && error.digest && (
+          <p className="text-xs text-muted-foreground font-mono">digest {error.digest}</p>
         )}
       </div>
       <div className="flex gap-3">
