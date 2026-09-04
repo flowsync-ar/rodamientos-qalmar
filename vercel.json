@@ -1,0 +1,7 @@
+{
+  "crons": [
+    { "path": "/api/cron/recalculate-scores", "schedule": "0 3 * * *" },
+    { "path": "/api/cron/no-purchase-check", "schedule": "0 4 * * *" },
+    { "path": "/api/cron/demand-forecast", "schedule": "0 2 * * 1" }
+  ]
+}

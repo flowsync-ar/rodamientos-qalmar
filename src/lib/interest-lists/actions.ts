@@ -1,0 +1,148 @@
+'use server'
+
+import { revalidatePath } from 'next/cache'
+import { after } from 'next/server'
+import { db } from '@/db'
+import { interestLists, interestListItems, quoteRequests, clients, profiles } from '@/db/schema'
+import { eq } from 'drizzle-orm'
+import type { ActionResult } from '@/lib/types/action-result'
+import {
+  getOrCreateInterestList,
+  getClientIdByProfileId,
+  getInterestListWithItems,
+} from './queries'
+import { getUser } from '@/lib/auth/get-user'
+import { notify } from '@/lib/notifications'
+
+async function getAuthClientId(): Promise<string | null> {
+  const user = await getUser()
+  if (!user) return null
+  return getClientIdByProfileId(user.id)
+}
+
+export async function addToInterestList(
+  productId: string,
+  quantity = 1,
+  notes?: string
+): Promise<ActionResult<{ itemId: string }>> {
+  try {
+    const clientId = await getAuthClientId()
+    if (!clientId) return { success: false, error: 'Autenticación requerida', code: 'UNAUTHENTICATED' }
+
+    const list = await getOrCreateInterestList(clientId)
+
+    const [item] = await db
+      .insert(interestListItems)
+      .values({
+        interestListId: list.id,
+        productId,
+        quantity,
+        notes: notes ?? null,
+      })
+      .returning({ id: interestListItems.id })
+
+    revalidatePath('/mi-lista')
+    return { success: true, data: { itemId: item.id } }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Unknown error' }
+  }
+}
+
+export async function removeFromInterestList(itemId: string): Promise<ActionResult<void>> {
+  try {
+    await db.delete(interestListItems).where(eq(interestListItems.id, itemId))
+    revalidatePath('/mi-lista')
+    return { success: true, data: undefined }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Unknown error' }
+  }
+}
+
+export async function updateItemQuantity(
+  itemId: string,
+  quantity: number
+): Promise<ActionResult<void>> {
+  try {
+    if (quantity < 1) return { success: false, error: 'La cantidad debe ser al menos 1' }
+
+    await db
+      .update(interestListItems)
+      .set({ quantity })
+      .where(eq(interestListItems.id, itemId))
+
+    revalidatePath('/mi-lista')
+    return { success: true, data: undefined }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Unknown error' }
+  }
+}
+
+export async function requestQuote(interestListId: string): Promise<ActionResult<{ requestId: string }>> {
+  try {
+    const clientId = await getAuthClientId()
+    if (!clientId) return { success: false, error: 'Autenticación requerida', code: 'UNAUTHENTICATED' }
+
+    // Verify list has items
+    const listWithItems = await getInterestListWithItems(clientId)
+    if (!listWithItems || listWithItems.items.length === 0) {
+      return { success: false, error: 'Tu carrito está vacío' }
+    }
+
+    // No salesperson is assigned here — that's done from the admin dashboard
+    // once the request comes in.
+    //
+    // The requested items are moved into a frozen snapshot list so the
+    // client's cart empties out immediately, while convertQuoteRequest can
+    // still read the exact items that were requested whenever an admin
+    // eventually processes it (which may be much later).
+    const req = await db.transaction(async (tx) => {
+      const [snapshot] = await tx
+        .insert(interestLists)
+        .values({ clientId, name: 'Quote request snapshot' })
+        .returning({ id: interestLists.id })
+
+      await tx
+        .update(interestListItems)
+        .set({ interestListId: snapshot.id })
+        .where(eq(interestListItems.interestListId, interestListId))
+
+      const [created] = await tx
+        .insert(quoteRequests)
+        .values({
+          interestListId: snapshot.id,
+          clientId,
+          status: 'pending',
+        })
+        .returning({ id: quoteRequests.id })
+
+      return created
+    })
+
+    const clientRows = await db
+      .select({
+        razonSocial: clients.razonSocial,
+        profileId: clients.profileId,
+      })
+      .from(clients)
+      .where(eq(clients.id, clientId))
+      .limit(1)
+
+    const clientName = clientRows[0]?.razonSocial ?? 'Client'
+    const productCount = listWithItems.items.length
+
+    // In-app notification — non-blocking, kept alive past the response
+    after(() =>
+      notify('new_quote_request', {
+        requestId: req.id,
+        clientId,
+        clientName,
+        productCount,
+      }).catch(() => {})
+    )
+
+    revalidatePath('/mi-lista')
+    return { success: true, data: { requestId: req.id } }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Unknown error' }
+  }
+}
