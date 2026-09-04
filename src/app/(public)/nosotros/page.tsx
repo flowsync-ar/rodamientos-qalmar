@@ -3,12 +3,12 @@ export default function NosotrosPage() {
     <div className="max-w-2xl mx-auto space-y-8 py-4">
       <div>
         <h1 className="text-3xl font-bold">La Empresa</h1>
-        <p className="text-muted-foreground mt-2">Steyr Bearings Group SA</p>
+        <p className="text-muted-foreground mt-2">Qalmar SRL</p>
       </div>
 
       <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
         <p>
-          Steyr Bearings Group SA es una empresa enfocada en la importación y distribución de rodamientos.
+          Qalmar SRL es una empresa enfocada en la importación y distribución de rodamientos.
           Distribuimos una gran variedad de marcas: <strong className="text-foreground">FAG, TIMKEN, INA, FERSA, NTN, KOYO, STEYR, SKF, EBI, KG, ZNL y CFC ITALY</strong>.
           Todas sinónimo de calidad y durabilidad, características indispensables para tu negocio.
         </p>
@@ -23,7 +23,7 @@ export default function NosotrosPage() {
       </div>
 
       <div className="border-t pt-6 text-sm text-muted-foreground space-y-1">
-        <p className="font-medium text-foreground">Steyr Bearings Group SA</p>
+        <p className="font-medium text-foreground">Qalmar SRL</p>
         <p>Manuel Ricardo Trelles 2176, CABA, Buenos Aires, Argentina</p>
         <p>
           <a href="tel:01145708222" className="hover:text-foreground transition-colors">

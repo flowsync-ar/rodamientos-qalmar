@@ -128,7 +128,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
             <Link href="/contacto" className="hover:text-foreground transition-colors">Contacto</Link>
           </nav>
           <div className="text-xs space-y-1 text-right">
-            <p>© {new Date().getFullYear()} Steyr Bearings Group SA</p>
+            <p>© {new Date().getFullYear()} Qalmar SRL</p>
             <p>
               Desarrollado por{' '}
               <a
