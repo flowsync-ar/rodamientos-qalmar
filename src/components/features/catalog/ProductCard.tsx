@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import {
   Card,
   CardFooter,
@@ -7,6 +6,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { AddToListButton } from './AddToListButton'
+import { SafeImage } from './SafeImage'
 
 interface ProductCardProps {
   id: string
@@ -36,11 +36,9 @@ export function ProductCard({
     <Card className="flex h-full flex-col overflow-hidden transition-transform hover:-translate-y-1">
       <Link href={href} className="block shrink-0">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-          <Image
-            src={firstImage ?? '/imagen_no_disponible.png'}
+          <SafeImage
+            src={firstImage}
             alt={firstImage ? name : 'Imagen no disponible'}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className={firstImage ? 'object-cover' : 'object-contain'}
           />
         </div>

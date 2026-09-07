@@ -2,7 +2,6 @@ export const dynamic = 'force-dynamic'
 
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { getUser } from '@/lib/auth/get-user'
 import {
   getInterestListWithItems,
@@ -17,6 +16,7 @@ import {
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ShoppingCart, Trash2, Package } from 'lucide-react'
+import { SafeImage } from '@/components/features/catalog/SafeImage'
 
 interface Props {
   searchParams: Promise<{ addProduct?: string; requestQuote?: string }>
@@ -89,11 +89,9 @@ export default async function MiCarritoPage({ searchParams }: Props) {
             >
               {/* Thumbnail */}
               <div className="relative size-16 shrink-0 rounded-lg overflow-hidden bg-muted">
-                <Image
-                  src={firstImage ?? '/imagen_no_disponible.png'}
+                <SafeImage
+                  src={firstImage}
                   alt={item.productName}
-                  fill
-                  sizes="64px"
                   className="object-contain"
                 />
               </div>

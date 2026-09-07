@@ -1,7 +1,6 @@
 export const dynamic = 'force-dynamic'
 
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { db } from '@/db'
 import { products, categories } from '@/db/schema'
@@ -9,6 +8,7 @@ import { eq } from 'drizzle-orm'
 import { ProductSpecs } from '@/components/features/catalog/ProductSpecs'
 import { ProductCard } from '@/components/features/catalog/ProductCard'
 import { ProductGrid } from '@/components/features/catalog/ProductGrid'
+import { SafeImage } from '@/components/features/catalog/SafeImage'
 import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
@@ -103,11 +103,11 @@ export default async function ProductDetailPage({ params }: Props) {
         <div className="space-y-3">
           {firstImage ? (
             <div className="relative aspect-square rounded-xl overflow-hidden bg-muted border">
-              <Image src={firstImage} alt={product.name} fill className="object-cover" />
+              <SafeImage src={firstImage} alt={product.name} className="object-cover" />
             </div>
           ) : (
             <div className="relative aspect-square rounded-xl overflow-hidden bg-muted border">
-              <Image src="/imagen_no_disponible.png" alt="Imagen no disponible" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
+              <SafeImage src={null} alt="Imagen no disponible" className="object-contain" />
             </div>
           )}
           {/* Additional images */}
@@ -118,7 +118,7 @@ export default async function ProductDetailPage({ params }: Props) {
                   key={i}
                   className="relative size-16 shrink-0 rounded-lg overflow-hidden border bg-muted"
                 >
-                  <Image src={img} alt={`${product.name} ${i + 2}`} fill className="object-cover" />
+                  <SafeImage src={img} alt={`${product.name} ${i + 2}`} className="object-cover" />
                 </div>
               ))}
             </div>

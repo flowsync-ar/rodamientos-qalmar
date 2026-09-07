@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import Image from 'next/image'
+import { SafeImage } from '@/components/features/catalog/SafeImage'
 
 interface ImagePickerProps {
   defaultImages?: string[]
@@ -10,20 +10,26 @@ interface ImagePickerProps {
 export function ImagePicker({ defaultImages = [] }: ImagePickerProps) {
   const [images, setImages] = useState<string[]>(defaultImages)
   const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [dragIndex, setDragIndex] = useState<number | null>(null)
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   async function handleFiles(files: FileList) {
     setUploading(true)
+    setError(null)
     const uploaded: string[] = []
 
     for (const file of Array.from(files)) {
       const fd = new FormData()
       fd.append('file', file)
       const res = await fetch('/api/products/images', { method: 'POST', body: fd })
-      const data = await res.json()
-      if (data.url) uploaded.push(data.url)
+      const data = (await res.json()) as { url?: string; error?: string }
+      if (!res.ok || !data.url) {
+        setError(data.error ?? `No se pudo subir ${file.name}`)
+        continue
+      }
+      uploaded.push(data.url)
     }
 
     setImages((prev) => [...prev, ...uploaded])
@@ -87,13 +93,7 @@ export function ImagePicker({ defaultImages = [] }: ImagePickerProps) {
               ].join(' ')}
             >
               <div className="w-24 h-24 relative bg-muted">
-                <Image
-                  src={url}
-                  alt={`Imagen ${i + 1}`}
-                  fill
-                  className="object-contain p-1"
-                  sizes="96px"
-                />
+                <SafeImage src={url} alt={`Imagen ${i + 1}`} className="object-contain p-1" />
               </div>
               {/* Cover badge */}
               {i === 0 && (
@@ -125,11 +125,13 @@ export function ImagePicker({ defaultImages = [] }: ImagePickerProps) {
           <span>Subiendo…</span>
         ) : (
           <span>
-            Arrastrá imágenes acá o{' '}
+            Arrastrá imágenes JPG o PNG acá o{' '}
             <span className="text-primary underline">hacé click para seleccionar</span>
           </span>
         )}
       </div>
+
+      {error && <p className="text-sm text-destructive">{error}</p>}
 
       <p className="text-xs text-muted-foreground">
         La primera imagen es la portada. Arrastrá los thumbnails para reordenar.
@@ -138,7 +140,7 @@ export function ImagePicker({ defaultImages = [] }: ImagePickerProps) {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/png,image/webp,image/gif,image/avif,.jpg,.jpeg,.png,.webp"
         multiple
         className="hidden"
         onChange={(e) => e.target.files && handleFiles(e.target.files)}
