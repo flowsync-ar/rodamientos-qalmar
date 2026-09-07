@@ -5,7 +5,7 @@ export default function ContactoPage() {
     <div className="max-w-2xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl font-bold">Contacto</h1>
-        <p className="text-muted-foreground mt-2">
+        <p className="text-foreground/80 mt-2">
           Completá el formulario y te respondemos a la brevedad.
         </p>
       </div>
@@ -13,7 +13,7 @@ export default function ContactoPage() {
       <form className="space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <label htmlFor="nombre" className="text-sm font-medium">
+            <label htmlFor="nombre" className="flex h-5 items-center text-sm font-medium">
               Nombre
             </label>
             <input
@@ -22,26 +22,26 @@ export default function ContactoPage() {
               type="text"
               required
               placeholder="Tu nombre"
-              className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+              className="w-full rounded-lg border border-foreground/20 bg-white px-3 py-2 text-sm outline-none placeholder:text-foreground/45 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
             />
           </div>
           <div className="space-y-1.5">
-            <label htmlFor="empresa" className="text-sm font-medium">
-              Empresa <span className="text-muted-foreground font-normal">(opcional)</span>
+            <label htmlFor="empresa" className="flex h-5 items-center gap-1 whitespace-nowrap text-sm font-medium">
+              Empresa <span className="font-normal text-foreground/55">(opcional)</span>
             </label>
             <input
               id="empresa"
               name="empresa"
               type="text"
               placeholder="Nombre de tu empresa"
-              className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+              className="w-full rounded-lg border border-foreground/20 bg-white px-3 py-2 text-sm outline-none placeholder:text-foreground/45 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <label htmlFor="email" className="text-sm font-medium">
+            <label htmlFor="email" className="flex h-5 items-center text-sm font-medium">
               Email
             </label>
             <input
@@ -50,19 +50,19 @@ export default function ContactoPage() {
               type="email"
               required
               placeholder="tu@email.com"
-              className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+              className="w-full rounded-lg border border-foreground/20 bg-white px-3 py-2 text-sm outline-none placeholder:text-foreground/45 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
             />
           </div>
           <div className="space-y-1.5">
-            <label htmlFor="telefono" className="text-sm font-medium">
-              Teléfono <span className="text-muted-foreground font-normal">(opcional)</span>
+            <label htmlFor="telefono" className="flex h-5 items-center gap-1 whitespace-nowrap text-sm font-medium">
+              Teléfono <span className="font-normal text-foreground/55">(opcional)</span>
             </label>
             <input
               id="telefono"
               name="telefono"
               type="tel"
               placeholder="+54 11 0000-0000"
-              className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+              className="w-full rounded-lg border border-foreground/20 bg-white px-3 py-2 text-sm outline-none placeholder:text-foreground/45 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
             />
           </div>
         </div>
@@ -77,7 +77,7 @@ export default function ContactoPage() {
             type="text"
             required
             placeholder="ej. Consulta sobre rodamientos industriales"
-            className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+            className="w-full rounded-lg border border-foreground/20 bg-white px-3 py-2 text-sm outline-none placeholder:text-foreground/45 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
           />
         </div>
 
@@ -91,7 +91,7 @@ export default function ContactoPage() {
             required
             rows={5}
             placeholder="Contanos en qué podemos ayudarte..."
-            className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50 resize-y"
+            className="w-full resize-y rounded-lg border border-foreground/20 bg-white px-3 py-2 text-sm outline-none placeholder:text-foreground/45 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
           />
         </div>
 
@@ -103,7 +103,7 @@ export default function ContactoPage() {
         </button>
       </form>
 
-      <div className="border-t pt-6 space-y-4 text-sm text-muted-foreground">
+      <div className="border-t pt-6 space-y-4 text-sm text-foreground/75">
         <div>
           <p className="font-semibold text-foreground text-base">Qalmar</p>
           <p>Nombre de fantasía</p>

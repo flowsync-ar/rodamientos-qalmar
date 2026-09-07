@@ -1,9 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Badge } from '@/components/ui/badge'
 import {
   Card,
-  CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -26,7 +24,6 @@ export function ProductCard({
   id,
   name,
   sku,
-  description,
   images,
   categoryName,
   slug,
@@ -36,54 +33,43 @@ export function ProductCard({
   const firstImage = images?.[0]
 
   return (
-    <Card className="flex flex-col h-full">
-      <Link href={href} className="block">
-        {firstImage ? (
-          <div className="relative aspect-[4/3] overflow-hidden rounded-t-xl bg-muted">
-            <Image src={firstImage} alt={name} fill className="object-cover" />
-          </div>
-        ) : (
-          <div className="relative aspect-[4/3] overflow-hidden rounded-t-xl bg-muted">
-            <Image
-              src="/imagen_no_disponible.png"
-              alt="Imagen no disponible"
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              className="object-contain"
-            />
-          </div>
-        )}
-      </Link>
-
-      <CardHeader>
-        <CardTitle className="line-clamp-2 text-sm">
-          <Link href={href} className="hover:underline">{name}</Link>
-        </CardTitle>
-        {categoryName && (
-          <Badge variant="secondary" className="w-fit text-xs">
-            {categoryName}
-          </Badge>
-        )}
-      </CardHeader>
-
-      {description && (
-        <CardContent className="flex-1">
-          <p className="text-xs text-muted-foreground line-clamp-3">{description}</p>
-        </CardContent>
-      )}
-
-      <CardFooter className="flex items-center justify-between gap-2 pt-2">
-        <span className="text-xs font-mono text-muted-foreground">{sku}</span>
-        <div className="flex items-center gap-2">
-          <Link href={href} className="text-xs font-bold text-primary underline hover:opacity-80">
-            Ver detalles
-          </Link>
-          <AddToListButton
-            productId={id}
-            isAuthenticated={isAuthenticated}
-            returnUrl="/catalogo"
+    <Card className="flex h-full flex-col overflow-hidden transition-transform hover:-translate-y-1">
+      <Link href={href} className="block shrink-0">
+        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+          <Image
+            src={firstImage ?? '/imagen_no_disponible.png'}
+            alt={firstImage ? name : 'Imagen no disponible'}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className={firstImage ? 'object-cover' : 'object-contain'}
           />
         </div>
+      </Link>
+
+      <CardHeader className="min-w-0 flex-1 gap-1">
+        {categoryName && (
+          <p className="text-xs font-medium text-foreground/70">{categoryName}</p>
+        )}
+        <p
+          className="truncate font-mono text-[11px] font-semibold tracking-wide text-foreground/60"
+          title={sku}
+        >
+          {sku}
+        </p>
+        <CardTitle className="line-clamp-2 min-h-[2.5rem] text-sm">
+          <Link href={href} className="hover:underline">{name}</Link>
+        </CardTitle>
+      </CardHeader>
+
+      <CardFooter className="mt-auto flex shrink-0 items-center justify-between gap-2 border-t-0 bg-transparent">
+        <Link href={href} className="text-xs font-bold text-foreground underline hover:opacity-70">
+          Ver detalles
+        </Link>
+        <AddToListButton
+          productId={id}
+          isAuthenticated={isAuthenticated}
+          returnUrl="/catalogo"
+        />
       </CardFooter>
     </Card>
   )

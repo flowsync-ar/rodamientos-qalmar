@@ -8,6 +8,9 @@ import { isCliente, isAdmin, isVendedor } from '@/lib/auth/roles'
 import { signOut } from '@/lib/auth/actions'
 import { whatsappHref } from '@/lib/company/queries'
 
+const navLink =
+  'text-sm font-medium text-foreground hover:opacity-70 transition-opacity'
+
 async function getCartCount(): Promise<number> {
   try {
     const user = await getUser()
@@ -42,13 +45,13 @@ export default async function PublicLayout({ children }: { children: ReactNode }
           </Link>
 
           <div className="flex items-center gap-6">
-            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/" className={navLink}>
               Inicio
             </Link>
-            <Link href="/catalogo" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/catalogo" className={navLink}>
               Productos
             </Link>
-            <Link href="/contacto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/contacto" className={navLink}>
               Contacto
             </Link>
 
@@ -56,26 +59,26 @@ export default async function PublicLayout({ children }: { children: ReactNode }
               <>
                 <Link
                   href="/mi-cuenta"
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  className={navLink}
                 >
                   Mi cuenta
                 </Link>
                 <Link
                   href="/mis-presupuestos"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className={navLink}
                 >
                   Mis presupuestos
                 </Link>
                 <Link
                   href="/mis-compras"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className={navLink}
                 >
                   Mis compras
                 </Link>
                 <form action={signOut}>
                   <button
                     type="submit"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className={navLink}
                   >
                     Salir
                   </button>
@@ -85,14 +88,14 @@ export default async function PublicLayout({ children }: { children: ReactNode }
               <>
                 <Link
                   href="/admin/dashboard"
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  className={navLink}
                 >
                   Panel admin
                 </Link>
                 <form action={signOut}>
                   <button
                     type="submit"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className={navLink}
                   >
                     Salir
                   </button>
@@ -101,14 +104,14 @@ export default async function PublicLayout({ children }: { children: ReactNode }
             ) : (
               <Link
                 href="/login"
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className={navLink}
               >
                 Iniciar sesión
               </Link>
             )}
 
             <Link href="/mi-lista" className="relative flex items-center">
-              <ShoppingCart className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
+              <ShoppingCart className="h-5 w-5 text-foreground hover:opacity-70 transition-opacity" />
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
                   {cartCount > 99 ? '99+' : cartCount}
@@ -122,7 +125,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
 
       {/* Footer */}
       <footer className="border-t border-black/5 mt-12">
-        <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-sm text-muted-foreground">
+        <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-sm text-foreground/80">
           <nav className="flex flex-wrap gap-6">
             <Link href="/nosotros" className="hover:text-foreground transition-colors">La Empresa</Link>
             <Link href="/envio" className="hover:text-foreground transition-colors">Información de Envío</Link>
