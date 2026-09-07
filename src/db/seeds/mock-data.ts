@@ -937,6 +937,22 @@ async function seedAppConfig() {
         value: 24,
         updatedBy: ID.diego,
       },
+      {
+        key: 'company.settings',
+        value: {
+          name: 'Qalmar',
+          cuit: '20-29565129-7',
+          phone: '+54 9 291 402-0624',
+          email: '',
+          address: 'Don Bosco 2417',
+          city: 'Bahía Blanca',
+          province: 'Buenos Aires',
+          whatsapp: '+54 9 291 402-0624',
+          instagram: '',
+          website: '',
+        },
+        updatedBy: ID.diego,
+      },
     ])
     .onConflictDoNothing()
 

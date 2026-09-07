@@ -1,3 +1,5 @@
+import { WHATSAPP_DISPLAY, whatsappHref } from '@/lib/company/queries'
+
 export default function ContactoPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-8">
@@ -103,28 +105,29 @@ export default function ContactoPage() {
 
       <div className="border-t pt-6 space-y-4 text-sm text-muted-foreground">
         <div>
-          <p className="font-semibold text-foreground text-base">Steyr Bearings Group</p>
-          <p>Distribuidora e Importadora de Rodamientos</p>
+          <p className="font-semibold text-foreground text-base">Qalmar</p>
+          <p>Nombre de fantasía</p>
+          <p className="mt-2 font-medium text-foreground">
+            GONCALVEZ DELGADO RODOLFO NICOLAS ALEJANDRO
+          </p>
+          <p>CUIT 20-29565129-7</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <p className="font-medium text-foreground mb-1">Dirección</p>
-            <p>Trelles 2176</p>
-            <p>CABA – Buenos Aires, Argentina</p>
+            <p>Don Bosco 2417</p>
+            <p>Bahía Blanca, Buenos Aires, Argentina</p>
           </div>
           <div>
-            <p className="font-medium text-foreground mb-1">Teléfono / Fax</p>
-            <a href="tel:01145708222" className="hover:text-foreground transition-colors block">
-              011 4570-8222
-            </a>
+            <p className="font-medium text-foreground mb-1">WhatsApp</p>
             <a
-              href="https://wa.me/5491140800657?text=Estoy%20en%20su%20tienda%2C%20necesito%20asesoramiento"
+              href={whatsappHref('Hola, quiero hacer una consulta')}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors block"
+              className="hover:text-foreground transition-colors"
             >
-              WhatsApp: +54 9 11 4080-0657
+              {WHATSAPP_DISPLAY}
             </a>
           </div>
           <div>

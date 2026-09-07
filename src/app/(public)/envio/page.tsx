@@ -1,3 +1,5 @@
+import { whatsappHref } from '@/lib/company/queries'
+
 export default function EnvioPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-8 py-4">
@@ -44,7 +46,7 @@ export default function EnvioPage() {
 
       <div className="flex gap-4 flex-wrap">
         <a
-          href="https://wa.me/5491150507464?text=Hola%2C%20quiero%20coordinar%20un%20env%C3%ADo"
+          href={whatsappHref('Hola, quiero coordinar un envío')}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:opacity-90"

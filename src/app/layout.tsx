@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Steyr Bearings Group - Distribuidora Importadora de Rodamientos',
+  title: 'Qalmar - Distribuidora Importadora de Rodamientos',
   description: 'Industrial bearings and components catalog',
   icons: {
     icon: [

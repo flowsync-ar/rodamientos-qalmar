@@ -6,6 +6,7 @@ import { getUser } from '@/lib/auth/get-user'
 import { getClientIdByProfileId, getCartItemCount } from '@/lib/interest-lists/queries'
 import { isCliente, isAdmin, isVendedor } from '@/lib/auth/roles'
 import { signOut } from '@/lib/auth/actions'
+import { whatsappHref } from '@/lib/company/queries'
 
 async function getCartCount(): Promise<number> {
   try {
@@ -26,17 +27,17 @@ export default async function PublicLayout({ children }: { children: ReactNode }
   const isStaffUser = user && (isAdmin(user.role) || isVendedor(user.role))
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b h-24 overflow-hidden">
-        <nav className="flex h-full items-center justify-between gap-6 pl-1 pr-6">
-          <Link href="/" className="relative block h-[90px] w-[82px] shrink-0 overflow-hidden">
+    <div className="min-h-screen bg-qalmar-fade">
+      <header className="h-32">
+        <nav className="flex h-full items-center justify-between gap-6 px-6">
+          <Link href="/" className="relative block h-[120px] w-[120px] shrink-0">
             <Image
-              src="/logo-blanco-email.png"
-              alt="QalMar SRL"
+              src="/logo1.png"
+              alt="Qalmar"
               fill
-              sizes="82px"
+              sizes="120px"
               priority
-              className="object-cover object-center"
+              className="object-contain"
             />
           </Link>
 
@@ -120,7 +121,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
       <main className="max-w-6xl mx-auto px-6 py-8">{children}</main>
 
       {/* Footer */}
-      <footer className="border-t bg-muted/40 mt-12">
+      <footer className="border-t border-black/5 mt-12">
         <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-sm text-muted-foreground">
           <nav className="flex flex-wrap gap-6">
             <Link href="/nosotros" className="hover:text-foreground transition-colors">La Empresa</Link>
@@ -128,7 +129,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
             <Link href="/contacto" className="hover:text-foreground transition-colors">Contacto</Link>
           </nav>
           <div className="text-xs space-y-1 text-right">
-            <p>© {new Date().getFullYear()} Qalmar SRL</p>
+            <p>© {new Date().getFullYear()} Qalmar</p>
             <p>
               Desarrollado por{' '}
               <a
@@ -146,7 +147,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
 
       {/* WhatsApp floating button */}
       <a
-        href="https://wa.me/5491140800657?text=Estoy%20en%20su%20tienda%2C%20necesito%20asesoramiento"
+        href={whatsappHref('Estoy en su tienda, necesito asesoramiento')}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"

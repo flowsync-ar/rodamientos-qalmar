@@ -12,7 +12,7 @@ async function getRoleForUser(request: NextRequest, userId: string): Promise<App
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
 
-  if (!supabaseUrl.startsWith('http')) return null
+  if (!supabaseUrl.startsWith('http') || supabaseUrl.includes('placeholder')) return null
 
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
     cookies: {

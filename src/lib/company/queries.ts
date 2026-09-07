@@ -17,15 +17,22 @@ export interface CompanySettings {
 
 const COMPANY_KEY = 'company.settings'
 
+export const WHATSAPP_DISPLAY = '+54 9 291 402-0624'
+export const WHATSAPP_E164 = '5492914020624'
+
+export function whatsappHref(text: string) {
+  return `https://wa.me/${WHATSAPP_E164}?text=${encodeURIComponent(text)}`
+}
+
 const DEFAULTS: CompanySettings = {
-  name: '',
-  cuit: '',
-  phone: '',
+  name: 'Qalmar',
+  cuit: '20-29565129-7',
+  phone: WHATSAPP_DISPLAY,
   email: '',
-  address: '',
-  city: '',
-  province: '',
-  whatsapp: '',
+  address: 'Don Bosco 2417',
+  city: 'Bahía Blanca',
+  province: 'Buenos Aires',
+  whatsapp: WHATSAPP_DISPLAY,
   instagram: '',
   website: '',
 }
