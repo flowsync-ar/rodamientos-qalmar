@@ -29,7 +29,7 @@ const DEFAULTS: CompanySettings = {
   cuit: '20-29565129-7',
   phone: WHATSAPP_DISPLAY,
   email: '',
-  address: 'Don Bosco 2417',
+  address: 'Don Bosco 872',
   city: 'Bahía Blanca',
   province: 'Buenos Aires',
   whatsapp: WHATSAPP_DISPLAY,

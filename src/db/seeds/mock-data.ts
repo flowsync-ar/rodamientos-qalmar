@@ -944,7 +944,7 @@ async function seedAppConfig() {
           cuit: '20-29565129-7',
           phone: '+54 9 291 402-0624',
           email: '',
-          address: 'Don Bosco 2417',
+          address: 'Don Bosco 872',
           city: 'Bahía Blanca',
           province: 'Buenos Aires',
           whatsapp: '+54 9 291 402-0624',

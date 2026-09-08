@@ -28,7 +28,7 @@ export default function NosotrosPage() {
         <p className="font-medium text-foreground">Qalmar</p>
         <p>GONCALVEZ DELGADO RODOLFO NICOLAS ALEJANDRO</p>
         <p>CUIT 20-29565129-7</p>
-        <p>Don Bosco 2417, Bahía Blanca, Buenos Aires, Argentina</p>
+        <p>Don Bosco 872, Bahía Blanca, Buenos Aires, Argentina</p>
         <p>
           <a
             href={whatsappHref('Hola, quiero hacer una consulta')}

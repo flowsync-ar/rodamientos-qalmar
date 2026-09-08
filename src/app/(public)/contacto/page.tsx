@@ -116,7 +116,7 @@ export default function ContactoPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <p className="font-medium text-foreground mb-1">Dirección</p>
-            <p>Don Bosco 2417</p>
+            <p>Don Bosco 872</p>
             <p>Bahía Blanca, Buenos Aires, Argentina</p>
           </div>
           <div>
