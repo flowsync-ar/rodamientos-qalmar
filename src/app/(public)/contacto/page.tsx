@@ -103,7 +103,7 @@ export default function ContactoPage() {
 
       <div className="border-t pt-6 space-y-4 text-sm text-muted-foreground">
         <div>
-          <p className="font-semibold text-foreground text-base">Steyr Bearings Group</p>
+          <p className="font-semibold text-foreground text-base">Qalmar SRL</p>
           <p>Distribuidora e Importadora de Rodamientos</p>
         </div>
 

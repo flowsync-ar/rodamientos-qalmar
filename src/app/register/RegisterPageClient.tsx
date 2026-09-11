@@ -13,7 +13,7 @@ export function RegisterPageClient() {
         <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-white p-12">
           <Image
             src="/logo-blanco.png"
-            alt="Steyr Bearing Group"
+            alt="Qalmar SRL"
             width={360}
             height={120}
             className="object-contain w-full max-w-xs"

@@ -17,7 +17,7 @@ export default function NosotrosPage() {
           Realizamos envíos a todo el país.
         </p>
         <p>
-          Con más de <strong className="text-foreground">15 años de trayectoria</strong> en el mercado, Steyr Rodamientos no solo se ha posicionado como referente del sector,
+          Con más de <strong className="text-foreground">15 años de trayectoria</strong> en el mercado, Qalmar SRL no solo se ha posicionado como referente del sector,
           sino que brinda soluciones específicas de acuerdo a las necesidades particulares de cada cliente.
         </p>
       </div>
