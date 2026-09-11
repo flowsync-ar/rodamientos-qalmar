@@ -73,7 +73,12 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
   const params = await searchParams
   const { q, categorySlug, categoryId, page } = params
 
-  const categories = await getAllCategories()
+  let categories: Awaited<ReturnType<typeof getAllCategories>> = []
+  try {
+    categories = await getAllCategories()
+  } catch (error) {
+    console.error('[CatalogoPage] failed to load categories', error)
+  }
 
   const resolvedCategoryId =
     categoryId ||
@@ -83,12 +88,22 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
   const { data: { user } } = await supabase.auth.getUser()
   const isAuthenticated = !!user
 
-  const { data: productList, total, totalPages } = await getAllProducts({
-    search: q,
-    categoryId: resolvedCategoryId,
-    active: true,
-    page: page ? Number(page) : 1,
-  })
+  let productList: Awaited<ReturnType<typeof getAllProducts>>['data'] = []
+  let total = 0
+  let totalPages = 0
+  try {
+    const result = await getAllProducts({
+      search: q,
+      categoryId: resolvedCategoryId,
+      active: true,
+      page: page ? Number(page) : 1,
+    })
+    productList = result.data
+    total = result.total
+    totalPages = result.totalPages
+  } catch (error) {
+    console.error('[CatalogoPage] failed to load products', error)
+  }
 
   const currentPage = page ? Number(page) : 1
 

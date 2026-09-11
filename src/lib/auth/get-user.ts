@@ -34,20 +34,25 @@ export async function getUser(): Promise<AuthUser | null> {
 
   if (error || !user) return null
 
-  const [profile] = await db
-    .select()
-    .from(profiles)
-    .where(eq(profiles.id, user.id))
-    .limit(1)
+  try {
+    const [profile] = await db
+      .select()
+      .from(profiles)
+      .where(eq(profiles.id, user.id))
+      .limit(1)
 
-  if (!profile) return null
+    if (!profile) return null
 
-  return {
-    id: user.id,
-    email: user.email,
-    role: profile.role,
-    fullName: profile.fullName,
-    companyName: profile.companyName ?? null,
+    return {
+      id: user.id,
+      email: user.email,
+      role: profile.role,
+      fullName: profile.fullName,
+      companyName: profile.companyName ?? null,
+    }
+  } catch (profileError) {
+    console.error('[getUser] profile query failed', profileError)
+    return null
   }
 }
 
