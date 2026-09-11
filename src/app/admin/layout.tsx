@@ -61,7 +61,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     <div className="min-h-screen flex flex-col">
       {/* Top navbar */}
       <header className="border-b px-6 h-14 flex items-center justify-between shrink-0 bg-white">
-        <Image src="/logo-transparente.png" alt="Logo" height={36} width={120} className="object-contain" />
+        <Image src="/logo1.png" alt="Qalmar" height={48} width={48} className="object-contain" />
         <div className="flex items-center gap-3">
           <Link
             href="/"

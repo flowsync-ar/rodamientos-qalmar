@@ -42,15 +42,19 @@ export default async function CatalogHomePage() {
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">
           Rodamientos y Componentes Industriales
         </h1>
-        <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
+        <p className="text-foreground/80 max-w-xl mx-auto text-sm sm:text-base">
           Explorá nuestro catálogo y agregá productos a tu lista de interés para solicitar un presupuesto.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link href="/catalogo" className={buttonVariants({ size: 'lg' })}>
             Ver Catálogo
           </Link>
-          {/* Voice search placeholder — Slice 3 */}
-          <Button variant="outline" size="lg" disabled>
+          <Button
+            variant="outline"
+            size="lg"
+            disabled
+            className="border-foreground/40 bg-white text-foreground disabled:opacity-100"
+          >
             Búsqueda por voz (próximamente)
           </Button>
         </div>
