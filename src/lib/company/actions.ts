@@ -38,6 +38,8 @@ export async function saveCompanySettings(formData: FormData): Promise<ActionRes
       })
 
     revalidatePath('/admin/settings/empresa')
+    revalidatePath('/contacto')
+    revalidatePath('/nosotros')
     return { success: true, data: undefined }
   } catch (err) {
     return {

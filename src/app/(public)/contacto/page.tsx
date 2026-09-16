@@ -1,4 +1,4 @@
-import { WHATSAPP_DISPLAY, whatsappHref } from '@/lib/company/queries'
+import { COMPANY_ADDRESS, COMPANY_CITY, COMPANY_PROVINCE, WHATSAPP_DISPLAY, whatsappHref } from '@/lib/company/queries'
 
 export default function ContactoPage() {
   return (
@@ -116,8 +116,8 @@ export default function ContactoPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <p className="font-medium text-foreground mb-1">Dirección</p>
-            <p>Don Bosco 872</p>
-            <p>Bahía Blanca, Buenos Aires, Argentina</p>
+            <p>{COMPANY_ADDRESS}</p>
+            <p>{COMPANY_CITY}, {COMPANY_PROVINCE}, Argentina</p>
           </div>
           <div>
             <p className="font-medium text-foreground mb-1">WhatsApp</p>

@@ -19,6 +19,9 @@ const COMPANY_KEY = 'company.settings'
 
 export const WHATSAPP_DISPLAY = '+54 9 291 402-0624'
 export const WHATSAPP_E164 = '5492914020624'
+export const COMPANY_ADDRESS = 'Ingeniero Luiggi 872'
+export const COMPANY_CITY = 'Bahía Blanca'
+export const COMPANY_PROVINCE = 'Buenos Aires'
 
 export function whatsappHref(text: string) {
   return `https://wa.me/${WHATSAPP_E164}?text=${encodeURIComponent(text)}`
@@ -29,9 +32,9 @@ const DEFAULTS: CompanySettings = {
   cuit: '20-29565129-7',
   phone: WHATSAPP_DISPLAY,
   email: '',
-  address: 'Don Bosco 872',
-  city: 'Bahía Blanca',
-  province: 'Buenos Aires',
+  address: COMPANY_ADDRESS,
+  city: COMPANY_CITY,
+  province: COMPANY_PROVINCE,
   whatsapp: WHATSAPP_DISPLAY,
   instagram: '',
   website: '',
@@ -46,5 +49,12 @@ export async function getCompanySettings(): Promise<CompanySettings> {
 
   if (!rows[0]) return DEFAULTS
 
-  return { ...DEFAULTS, ...(rows[0].value as Partial<CompanySettings>) }
+  const merged = { ...DEFAULTS, ...(rows[0].value as Partial<CompanySettings>) }
+  // Old saved rows still say Don Bosco — keep the public address in one place.
+  if (/don bosco/i.test(merged.address)) {
+    merged.address = COMPANY_ADDRESS
+    merged.city = COMPANY_CITY
+    merged.province = COMPANY_PROVINCE
+  }
+  return merged
 }

@@ -1,4 +1,4 @@
-import { WHATSAPP_DISPLAY, whatsappHref } from '@/lib/company/queries'
+import { COMPANY_ADDRESS, COMPANY_CITY, COMPANY_PROVINCE, WHATSAPP_DISPLAY, whatsappHref } from '@/lib/company/queries'
 
 export default function NosotrosPage() {
   return (
@@ -28,7 +28,7 @@ export default function NosotrosPage() {
         <p className="font-medium text-foreground">Qalmar</p>
         <p>GONCALVEZ DELGADO RODOLFO NICOLAS ALEJANDRO</p>
         <p>CUIT 20-29565129-7</p>
-        <p>Don Bosco 872, Bahía Blanca, Buenos Aires, Argentina</p>
+        <p>{COMPANY_ADDRESS}, {COMPANY_CITY}, {COMPANY_PROVINCE}, Argentina</p>
         <p>
           <a
             href={whatsappHref('Hola, quiero hacer una consulta')}
