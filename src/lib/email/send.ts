@@ -16,7 +16,7 @@ const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'Seekingbusiness <noreply@seeking
 // Known-good production URL — emails must never contain a localhost link or
 // image, even if NEXT_PUBLIC_APP_URL is unset or misconfigured for the
 // environment that triggered the send.
-const PRODUCTION_APP_URL = 'https://rodamientos-steyrbearingsgroup.vercel.app'
+const PRODUCTION_APP_URL = 'https://qalmar.com.ar'
 
 /**
  * Resolves the public-facing app URL for use in emails. Falls back to the
@@ -218,7 +218,7 @@ export async function sendActivateAccountEmail(
 
   await sendSmtpMail({
     to: clientEmail,
-    subject: 'Activá tu cuenta — Steyr Bearing Group',
+    subject: 'Activá tu cuenta — Qalmar SRL',
     html,
   })
 }
@@ -241,7 +241,7 @@ export async function sendVendedorInviteEmail(
 
   await sendSmtpMail({
     to: email,
-    subject: 'Activá tu cuenta de vendedor — Steyr Bearing Group',
+    subject: 'Activá tu cuenta de vendedor — Qalmar SRL',
     html,
   })
 }

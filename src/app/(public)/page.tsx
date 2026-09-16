@@ -21,10 +21,17 @@ const CATEGORY_IMAGES: Record<string, string> = {
 }
 
 export default async function CatalogHomePage() {
-  const [recentProducts, categories] = await Promise.all([
-    getActiveProducts(8),
-    getAllCategories(),
-  ])
+  let recentProducts: Awaited<ReturnType<typeof getActiveProducts>> = []
+  let categories: Awaited<ReturnType<typeof getAllCategories>> = []
+
+  try {
+    ;[recentProducts, categories] = await Promise.all([
+      getActiveProducts(8),
+      getAllCategories(),
+    ])
+  } catch (error) {
+    console.error('[CatalogHomePage] failed to load catalog data', error)
+  }
 
   return (
     <div className="space-y-12">

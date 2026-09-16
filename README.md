@@ -117,4 +117,3 @@ CRON_SECRET=
 | `admin_secundario` | Same as admin_general minus scoring config |
 | `vendedor` | Clients assigned to them, quotes, voice consultations |
 | `cliente` | Public catalog, interest list, quote portal |
-# steyrbearingsgroup
