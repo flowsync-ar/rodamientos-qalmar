@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { UploadCloud, FileText, Download } from 'lucide-react'
 import { importProductsFromCSV } from './actions'
+import { parseProductCsv, type ProductCsvRow } from '@/lib/products/csv'
 
 const TEMPLATE_CSV = `name,sku,category_slug,description,active
 Rodamiento de Bola 6205-2RS,6205-2RS,rodamiento-de-ruedas,Rodamiento rígido de bolas con dos sellos de caucho,true
@@ -22,56 +23,24 @@ function downloadTemplate() {
   URL.revokeObjectURL(url)
 }
 
-interface ParsedRow {
-  name: string
-  sku: string
-  categorySlug: string
-  description: string
-  active: boolean
-  error?: string
-}
-
-function parseCSV(text: string): ParsedRow[] {
-  const lines = text.split('\n').filter((l) => l.trim())
-  if (lines.length < 2) return []
-
-  const headers = lines[0].split(',').map((h) => h.trim().toLowerCase())
-  const nameIdx = headers.indexOf('name')
-  const skuIdx = headers.indexOf('sku')
-  const categoryIdx = headers.indexOf('category_slug')
-  const descIdx = headers.indexOf('description')
-  const activeIdx = headers.indexOf('active')
-
-  return lines.slice(1).map((line) => {
-    const cols = line.split(',').map((c) => c.trim().replace(/^"|"$/g, ''))
-    const name = nameIdx >= 0 ? cols[nameIdx] : ''
-    const sku = skuIdx >= 0 ? cols[skuIdx] : ''
-
-    const error = !name ? 'Falta nombre' : !sku ? 'Falta SKU' : undefined
-
-    return {
-      name,
-      sku,
-      categorySlug: categoryIdx >= 0 ? cols[categoryIdx] : '',
-      description: descIdx >= 0 ? cols[descIdx] : '',
-      active: activeIdx >= 0 ? cols[activeIdx] !== 'false' : true,
-      error,
-    }
-  })
-}
+const REQUEST_BATCH = 250
+const PREVIEW_ROWS = 50
 
 export default function ImportarPage() {
-  const [rows, setRows] = useState<ParsedRow[]>([])
+  const [rows, setRows] = useState<ProductCsvRow[]>([])
   const [fileName, setFileName] = useState<string | null>(null)
   const [dragActive, setDragActive] = useState(false)
   const [importing, setImporting] = useState(false)
-  const [result, setResult] = useState<{ imported: number; errors: string[] } | null>(null)
+  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null)
+  const [result, setResult] = useState<{ created: number; updated: number; errors: string[] } | null>(
+    null
+  )
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   async function loadFile(file: File) {
     const text = await file.text()
     setFileName(file.name)
-    setRows(parseCSV(text))
+    setRows(parseProductCsv(text))
     setResult(null)
   }
 
@@ -89,18 +58,37 @@ export default function ImportarPage() {
   }
 
   async function handleImport() {
-    if (rows.length === 0) return
-    setImporting(true)
-
-    const fd = new FormData()
     const validRows = rows.filter((r) => !r.error)
-    fd.append('rows', JSON.stringify(validRows))
+    if (validRows.length === 0) return
+    setImporting(true)
+    setResult(null)
+    setProgress({ done: 0, total: validRows.length })
 
+    let created = 0
+    let updated = 0
+    const errors: string[] = []
     try {
-      const res = await importProductsFromCSV(fd)
-      setResult(res)
+      for (let i = 0; i < validRows.length; i += REQUEST_BATCH) {
+        const chunk = validRows.slice(i, i + REQUEST_BATCH)
+        setProgress({ done: i, total: validRows.length })
+        const fd = new FormData()
+        fd.append('rows', JSON.stringify(chunk))
+        const res = await importProductsFromCSV(fd)
+        created += res.created
+        updated += res.updated
+        errors.push(...res.errors)
+        setProgress({
+          done: Math.min(i + chunk.length, validRows.length),
+          total: validRows.length,
+        })
+      }
+      setResult({ created, updated, errors })
+    } catch (err) {
+      errors.push(err instanceof Error ? err.message : 'Error al importar. Probá de nuevo.')
+      setResult({ created, updated, errors })
     } finally {
       setImporting(false)
+      setProgress(null)
     }
   }
 
@@ -113,7 +101,9 @@ export default function ImportarPage() {
         <div>
           <h1 className="text-2xl font-semibold">Importar Productos (CSV)</h1>
           <p className="text-sm text-muted-foreground">
-            Columnas requeridas: <code className="font-mono text-xs">name, sku, category_slug, description, active</code>
+            Columnas: <code className="font-mono text-xs">name, sku, category_slug, description, active</code>
+            . Archivos grandes (miles de filas) se cargan en lotes. Si el SKU ya existe, se actualiza;
+            no se tocan fotos ni stock.
           </p>
         </div>
         <Button variant="outline" onClick={downloadTemplate} className="shrink-0 gap-2">
@@ -165,9 +155,12 @@ export default function ImportarPage() {
 
       {rows.length > 0 && (
         <div className="space-y-3">
-          <div className="flex gap-2 items-center">
+          <div className="flex flex-wrap gap-2 items-center">
             <Badge variant="default">{validCount} válidos</Badge>
             {errorCount > 0 && <Badge variant="secondary">{errorCount} errores</Badge>}
+            {validCount > REQUEST_BATCH && (
+              <Badge variant="secondary">Se procesa de a {REQUEST_BATCH}</Badge>
+            )}
           </div>
 
           <div className="overflow-x-auto rounded-lg border">
@@ -182,7 +175,7 @@ export default function ImportarPage() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row, i) => (
+                {rows.slice(0, PREVIEW_ROWS).map((row, i) => (
                   <tr key={i} className={row.error ? 'bg-destructive/5' : ''}>
                     <td className="px-3 py-2">{row.name || <span className="text-muted-foreground">—</span>}</td>
                     <td className="px-3 py-2 font-mono text-xs">{row.sku || <span className="text-muted-foreground">—</span>}</td>
@@ -200,19 +193,31 @@ export default function ImportarPage() {
               </tbody>
             </table>
           </div>
+          {rows.length > PREVIEW_ROWS && (
+            <p className="text-xs text-muted-foreground">
+              Mostrando {PREVIEW_ROWS} de {rows.length}. Se importan o actualizan todos los válidos.
+            </p>
+          )}
 
           <Button onClick={handleImport} disabled={importing || validCount === 0}>
-            {importing ? 'Importando…' : `Importar ${validCount} producto${validCount !== 1 ? 's' : ''}`}
+            {importing
+              ? `Procesando ${progress?.done ?? 0} / ${progress?.total ?? validCount}…`
+              : `Cargar / actualizar ${validCount} producto${validCount !== 1 ? 's' : ''}`}
           </Button>
         </div>
       )}
 
       {result && (
         <div className="rounded-lg border p-4 space-y-2">
-          <p className="font-medium">{result.imported} producto{result.imported !== 1 ? 's' : ''} importado{result.imported !== 1 ? 's' : ''}</p>
+          <p className="font-medium">
+            {result.created} nuevo{result.created !== 1 ? 's' : ''}, {result.updated} actualizado
+            {result.updated !== 1 ? 's' : ''}
+          </p>
           {result.errors.length > 0 && (
             <ul className="text-sm text-destructive space-y-1">
-              {result.errors.map((e, i) => <li key={i}>{e}</li>)}
+              {result.errors.map((e, i) => (
+                <li key={i}>{e}</li>
+              ))}
             </ul>
           )}
         </div>
