@@ -31,7 +31,7 @@ export default async function WatiSettingsPage({
       <div>
         <h1 className="text-2xl font-semibold">Wati / WhatsApp</h1>
         <p className="text-sm text-muted-foreground">
-          Cuando Wati esté activo, cargá acá los datos del panel. No hace falta tocar Vercel.
+          Cuando Wati esté activo, cargá acá los datos del panel. No hace tocar otra cosa del servidor.
         </p>
         <p className="mt-2 text-sm">
           Estado:{' '}
