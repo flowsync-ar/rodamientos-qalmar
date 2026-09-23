@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Building2, Bell, Star, UserCog, Percent } from 'lucide-react'
+import { Building2, Bell, Star, UserCog, Percent, MessageCircle } from 'lucide-react'
 
 const sections = [
   {
@@ -31,6 +31,12 @@ const sections = [
     icon: Star,
     title: 'Scoring',
     description: 'Pesos y factores para el scoring de clientes.',
+  },
+  {
+    href: '/admin/settings/wati',
+    icon: MessageCircle,
+    title: 'Wati / WhatsApp',
+    description: 'URL, token y canal para mandar WhatsApp cuando Wati esté activo.',
   },
 ]
 

@@ -36,13 +36,13 @@ export function SearchBar({ placeholder = 'Buscar productos…' }: SearchBarProp
   }, [value])
 
   return (
-    <div className="relative flex-1 max-w-xl">
-      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+    <div className="relative max-w-xl flex-1">
+      <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#999]" />
       <Input
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="pl-8"
+        className="h-10 rounded-sm border-transparent bg-white pl-9 shadow-sm"
       />
     </div>
   )

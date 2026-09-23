@@ -60,8 +60,11 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   return (
     <div className="min-h-screen flex flex-col">
       {/* Top navbar */}
-      <header className="border-b px-6 h-14 flex items-center justify-between shrink-0 bg-white">
-        <Image src="/logo1.png" alt="Qalmar" height={48} width={48} className="object-contain" />
+      <header className="flex h-16 shrink-0 items-center justify-between border-b bg-[var(--brand-yellow)] px-6">
+        <Link href="/admin/dashboard" className="flex items-center gap-2">
+          <Image src="/logo1.png" alt="Qalmar" height={56} width={56} className="h-14 w-14 object-contain" />
+          <span className="text-sm font-semibold text-[#1a1a1a]">Admin</span>
+        </Link>
         <div className="flex items-center gap-3">
           <Link
             href="/"

@@ -12,9 +12,9 @@ interface CategoryCardProps {
 export function CategoryCard({ name, slug, image, productCount }: CategoryCardProps) {
   return (
     <Link href={`/catalogo?categorySlug=${encodeURIComponent(slug)}`}>
-      <Card className="hover:ring-2 hover:ring-primary/40 transition-all cursor-pointer h-full overflow-hidden">
+      <Card className="h-full cursor-pointer overflow-hidden rounded-sm shadow-sm ring-0 transition-shadow hover:shadow-md">
         {image && (
-          <div className="relative w-full aspect-square bg-white">
+          <div className="relative aspect-square w-full bg-white">
             <Image
               src={image}
               alt={name}
@@ -27,7 +27,7 @@ export function CategoryCard({ name, slug, image, productCount }: CategoryCardPr
         <CardContent className="p-3">
           <p className="text-sm font-semibold leading-tight">{name}</p>
           {productCount !== undefined && (
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="mt-1 text-xs text-muted-foreground">
               {productCount} producto{productCount !== 1 ? 's' : ''}
             </p>
           )}

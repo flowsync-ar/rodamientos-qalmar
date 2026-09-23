@@ -87,9 +87,12 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 # Vercel Cron security
 CRON_SECRET=
 
-# Wati.io (deferred — not required for MVP)
-# WATI_API_URL=
+# Wati.io — API endpoint from the Wati dashboard (live-mt-server / live-server)
+# WATI_API_URL=https://live-mt-server.wati.io
 # WATI_API_TOKEN=
+# WATI_CHANNEL_NUMBER=5492914020624
+# WATI_WEBHOOK_SECRET=
+# Webhook URL: https://www.qalmar.com.ar/api/webhooks/wati?token=WATI_WEBHOOK_SECRET
 ```
 
 ## Cron Jobs (configured in vercel.json)

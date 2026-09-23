@@ -35,11 +35,11 @@ export default function ResetPasswordPage() {
     <Card>
       <CardHeader className="justify-items-center text-center space-y-3">
         <Image
-          src="/logo-blanco-email.png"
-          alt="QalMar SRL"
-          width={540}
-          height={260}
-          className="mx-auto h-24 w-auto object-contain"
+          src="/logo1.png"
+          alt="Qalmar"
+          width={140}
+          height={140}
+          className="mx-auto h-28 w-28 object-contain"
         />
         <div>
           <CardTitle>Restablecer contraseña</CardTitle>

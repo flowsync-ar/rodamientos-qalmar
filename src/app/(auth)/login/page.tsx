@@ -25,12 +25,12 @@ export default function LoginPage() {
     <Card>
       <CardHeader className="justify-items-center text-center space-y-3">
         <Image
-          src="/logo-blanco-email.png"
-          alt="QalMar SRL"
-          width={540}
-          height={260}
+          src="/logo1.png"
+          alt="Qalmar"
+          width={140}
+          height={140}
           priority
-          className="mx-auto h-24 w-auto object-contain"
+          className="mx-auto h-28 w-28 object-contain"
         />
         <div>
           <CardTitle>Iniciar sesión</CardTitle>

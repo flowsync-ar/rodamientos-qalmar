@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-const FALLBACK = '/imagen_no_disponible.png'
+const FALLBACK = '/generica.png'
 
 export function SafeImage({
   src,

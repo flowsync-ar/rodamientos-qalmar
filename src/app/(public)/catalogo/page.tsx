@@ -108,10 +108,9 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
   const currentPage = page ? Number(page) : 1
 
   return (
-    <div className="flex gap-6">
-      {/* Sidebar filters — hidden on mobile, shown on md+ */}
-      <aside className="hidden md:block w-56 shrink-0 space-y-6">
-        <div className="space-y-2">
+    <div className="flex gap-4">
+      <aside className="hidden w-56 shrink-0 md:block">
+        <div className="space-y-2 rounded-sm bg-white p-4 shadow-sm">
           <h3 className="text-sm font-semibold">Categorías</h3>
           <CategoryList
             categories={categories}
@@ -177,7 +176,7 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             {productList.map((p) => (
               <ProductCard
                 key={p.id}

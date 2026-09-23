@@ -2,7 +2,7 @@ import { COMPANY_ADDRESS, COMPANY_CITY, COMPANY_PROVINCE, WHATSAPP_DISPLAY, what
 
 export default function NosotrosPage() {
   return (
-    <div className="max-w-2xl mx-auto space-y-8 py-4">
+    <div className="mx-auto max-w-2xl space-y-8 rounded-sm bg-white p-6 py-6 shadow-sm">
       <div>
         <h1 className="text-3xl font-bold">La Empresa</h1>
         <p className="text-muted-foreground mt-2">Qalmar</p>

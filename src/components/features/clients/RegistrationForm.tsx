@@ -169,11 +169,11 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps = {}) {
     return (
       <div className="flex flex-col items-center text-center gap-6 py-8 px-4 max-w-sm mx-auto">
         <Image
-          src="/logo-transparente.png"
-          alt="Logo"
-          width={160}
-          height={54}
-          className="object-contain"
+          src="/logo1.png"
+          alt="Qalmar"
+          width={120}
+          height={120}
+          className="h-24 w-24 object-contain"
         />
         <div className="space-y-2">
           <h1 className="text-2xl font-bold">¡Muchas gracias por tu registro!</h1>
@@ -190,7 +190,8 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps = {}) {
 
   return (
     <Card className="w-full max-w-md">
-      <CardHeader>
+      <CardHeader className="items-center text-center">
+        <Image src="/logo1.png" alt="Qalmar" width={96} height={96} className="h-20 w-20 object-contain" />
         <CardTitle>Crear cuenta</CardTitle>
         <CardDescription>Completá tus datos para registrarte.</CardDescription>
       </CardHeader>

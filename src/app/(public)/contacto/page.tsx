@@ -2,7 +2,7 @@ import { COMPANY_ADDRESS, COMPANY_CITY, COMPANY_PROVINCE, WHATSAPP_DISPLAY, what
 
 export default function ContactoPage() {
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
+    <div className="mx-auto max-w-2xl space-y-6 rounded-sm bg-white p-6 shadow-sm">
       <div>
         <h1 className="text-3xl font-bold">Contacto</h1>
         <p className="text-foreground/80 mt-2">

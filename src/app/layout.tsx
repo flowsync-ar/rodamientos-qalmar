@@ -15,14 +15,13 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Qalmar - Distribuidora Importadora de Rodamientos',
-  description: 'Industrial bearings and components catalog',
+  title: 'Qalmar — Distribuidora Importadora de Rodamientos',
+  description: 'Catálogo de rodamientos y componentes industriales. Bahía Blanca.',
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/logo1.png', type: 'image/png' },
+      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '48x48' },
     ],
     apple: '/favicon/apple-touch-icon.png',
   },

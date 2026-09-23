@@ -101,15 +101,13 @@ export default async function ProductDetailPage({ params }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Image */}
         <div className="space-y-3">
-          {firstImage ? (
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-muted border">
-              <SafeImage src={firstImage} alt={product.name} className="object-cover" />
-            </div>
-          ) : (
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-muted border">
-              <SafeImage src={null} alt="Imagen no disponible" className="object-contain" />
-            </div>
-          )}
+          <div className="relative aspect-square overflow-hidden rounded-sm bg-white shadow-sm">
+            <SafeImage
+              src={firstImage}
+              alt={firstImage ? product.name : `${product.name} — imagen ilustrativa`}
+              className="object-contain p-4"
+            />
+          </div>
           {/* Additional images */}
           {(product.images?.length ?? 0) > 1 && (
             <div className="flex gap-2 overflow-x-auto">
@@ -126,7 +124,7 @@ export default async function ProductDetailPage({ params }: Props) {
         </div>
 
         {/* Info */}
-        <div className="space-y-4">
+        <div className="space-y-4 rounded-sm bg-white p-5 shadow-sm">
           {product.categoryName && (
             <Badge variant="secondary">{product.categoryName}</Badge>
           )}
@@ -157,7 +155,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
       {/* Specs */}
       {Boolean(product.specs) && (
-        <section className="space-y-3">
+        <section className="space-y-3 rounded-sm bg-white p-5 shadow-sm">
           <h2 className="text-lg font-semibold">Especificaciones técnicas</h2>
           <ProductSpecs specs={product.specs} />
         </section>
@@ -165,7 +163,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
       {/* Related products */}
       {related.length > 0 && (
-        <section className="space-y-4">
+        <section className="space-y-4 rounded-sm bg-white p-5 shadow-sm">
           <h2 className="text-lg font-semibold">Productos relacionados</h2>
           <ProductGrid>
             {related.map((r) => (

@@ -21,7 +21,7 @@ useEffect(() => {
   }, [next])
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-muted">
+    <div className="relative w-full overflow-hidden rounded-sm bg-white shadow-sm">
       {/* Spacer invisible: mantiene la altura del contenedor según la imagen activa */}
       <Image
         src={slides[current].src}

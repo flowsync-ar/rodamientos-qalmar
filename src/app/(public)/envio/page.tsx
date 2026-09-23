@@ -2,7 +2,7 @@ import { whatsappHref } from '@/lib/company/queries'
 
 export default function EnvioPage() {
   return (
-    <div className="max-w-2xl mx-auto space-y-8 py-4">
+    <div className="mx-auto max-w-2xl space-y-8 rounded-sm bg-white p-6 py-6 shadow-sm">
       <div>
         <h1 className="text-3xl font-bold">Información de Envío</h1>
         <p className="text-muted-foreground mt-2">

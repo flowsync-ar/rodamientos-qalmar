@@ -213,7 +213,7 @@ export async function sendActivateAccountEmail(
 ): Promise<void> {
   const html = renderActivateAccountEmail({
     activateUrl,
-    logoUrl: `${APP_URL}/logo-blanco-email.png`,
+    logoUrl: `${APP_URL}/logo1.png`,
   })
 
   await sendSmtpMail({
@@ -236,7 +236,7 @@ export async function sendVendedorInviteEmail(
   const html = renderVendedorInviteEmail({
     fullName,
     setPasswordUrl,
-    logoUrl: `${APP_URL}/logo-blanco-email.png`,
+    logoUrl: `${APP_URL}/logo1.png`,
   })
 
   await sendSmtpMail({

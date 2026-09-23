@@ -1,15 +1,18 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, User } from 'lucide-react'
 import { getUser } from '@/lib/auth/get-user'
 import { getClientIdByProfileId, getCartItemCount } from '@/lib/interest-lists/queries'
 import { isCliente, isAdmin, isVendedor } from '@/lib/auth/roles'
 import { signOut } from '@/lib/auth/actions'
 import { whatsappHref } from '@/lib/company/queries'
+import { HeaderSearch } from '@/components/features/catalog/HeaderSearch'
 
-const navLink =
-  'text-sm font-medium text-foreground hover:opacity-70 transition-opacity'
+const topLink =
+  'whitespace-nowrap text-sm font-medium text-[#333] hover:opacity-70 transition-opacity'
+const subLink =
+  'whitespace-nowrap text-sm text-[#333] hover:text-black transition-colors'
 
 async function getCartCount(): Promise<number> {
   try {
@@ -30,108 +33,117 @@ export default async function PublicLayout({ children }: { children: ReactNode }
   const isStaffUser = user && (isAdmin(user.role) || isVendedor(user.role))
 
   return (
-    <div className="min-h-screen bg-qalmar-fade">
-      <header className="h-32">
-        <nav className="flex h-full items-center justify-between gap-6 px-6">
-          <Link href="/" className="relative block h-[120px] w-[120px] shrink-0">
+    <div className="storefront min-h-screen">
+      <header className="relative z-20 bg-[var(--brand-yellow)]">
+        <div className="relative mx-auto max-w-6xl px-4">
+          <Link
+            href="/"
+            className="absolute left-4 top-0 z-30 block h-20 w-20 drop-shadow-sm"
+          >
             <Image
               src="/logo1.png"
               alt="Qalmar"
               fill
-              sizes="120px"
+              sizes="80px"
               priority
               className="object-contain"
             />
           </Link>
 
-          <div className="flex items-center gap-6">
-            <Link href="/" className={navLink}>
-              Inicio
-            </Link>
-            <Link href="/catalogo" className={navLink}>
-              Productos
-            </Link>
-            <Link href="/contacto" className={navLink}>
-              Contacto
-            </Link>
+          <div className="flex flex-wrap items-center gap-3 py-2 pl-[6.75rem]">
+          <HeaderSearch />
 
+          <div className="ml-auto flex items-center gap-4">
             {isClienteUser ? (
               <>
-                <Link
-                  href="/mi-cuenta"
-                  className={navLink}
-                >
+                <Link href="/mi-cuenta" className={`${topLink} hidden sm:inline-flex items-center gap-1.5`}>
+                  <User className="size-4" />
                   Mi cuenta
                 </Link>
-                <Link
-                  href="/mis-presupuestos"
-                  className={navLink}
-                >
-                  Mis presupuestos
+                <Link href="/mis-presupuestos" className={`${topLink} hidden md:inline`}>
+                  Presupuestos
                 </Link>
-                <Link
-                  href="/mis-compras"
-                  className={navLink}
-                >
-                  Mis compras
+                <Link href="/mis-compras" className={`${topLink} hidden md:inline`}>
+                  Compras
                 </Link>
                 <form action={signOut}>
-                  <button
-                    type="submit"
-                    className={navLink}
-                  >
+                  <button type="submit" className={topLink}>
                     Salir
                   </button>
                 </form>
               </>
             ) : isStaffUser ? (
               <>
-                <Link
-                  href="/admin/dashboard"
-                  className={navLink}
-                >
+                <Link href="/admin/dashboard" className={topLink}>
                   Panel admin
                 </Link>
                 <form action={signOut}>
-                  <button
-                    type="submit"
-                    className={navLink}
-                  >
+                  <button type="submit" className={topLink}>
                     Salir
                   </button>
                 </form>
               </>
             ) : (
-              <Link
-                href="/login"
-                className={navLink}
-              >
-                Iniciar sesión
+              <Link href="/login" className={`${topLink} inline-flex items-center gap-1.5`}>
+                <User className="size-4" />
+                Ingresá
               </Link>
             )}
 
-            <Link href="/mi-lista" className="relative flex items-center">
-              <ShoppingCart className="h-5 w-5 text-foreground hover:opacity-70 transition-opacity" />
+            <Link href="/mi-lista" className="relative flex items-center" aria-label="Mi lista">
+              <ShoppingCart className="h-5 w-5 text-[#333]" />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#333] px-1 text-[10px] font-bold text-white">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
             </Link>
           </div>
-        </nav>
+          </div>
+        </div>
       </header>
-      <main className="max-w-6xl mx-auto px-6 py-8">{children}</main>
 
-      {/* Footer */}
-      <footer className="border-t border-black/5 mt-12">
-        <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-sm text-foreground/80">
+      <nav className="relative z-10 border-b border-black/5 bg-white">
+        <div className="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-4 py-2 pl-[6.75rem]">
+          <Link href="/" className={subLink}>
+            Inicio
+          </Link>
+          <Link href="/catalogo" className={subLink}>
+            Productos
+          </Link>
+          <Link href="/nosotros" className={subLink}>
+            La empresa
+          </Link>
+          <Link href="/envio" className={subLink}>
+            Envíos
+          </Link>
+          <Link href="/contacto" className={subLink}>
+            Contacto
+          </Link>
+          {isClienteUser && (
+            <Link href="/mi-cuenta" className={`${subLink} sm:hidden`}>
+              Mi cuenta
+            </Link>
+          )}
+        </div>
+      </nav>
+
+      <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
+
+      <footer className="mt-10 border-t border-black/5 bg-white">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-4 py-8 text-sm text-[#666] sm:flex-row sm:items-center">
           <nav className="flex flex-wrap gap-6">
-            <Link href="/nosotros" className="hover:text-foreground transition-colors">La Empresa</Link>
-            <Link href="/envio" className="hover:text-foreground transition-colors">Información de Envío</Link>
-            <Link href="/contacto" className="hover:text-foreground transition-colors">Contacto</Link>
+            <Link href="/nosotros" className="hover:text-[#333]">
+              La Empresa
+            </Link>
+            <Link href="/envio" className="hover:text-[#333]">
+              Información de Envío
+            </Link>
+            <Link href="/contacto" className="hover:text-[#333]">
+              Contacto
+            </Link>
           </nav>
-          <div className="text-xs space-y-1 text-right">
+          <div className="space-y-1 text-xs sm:text-right">
             <p>© {new Date().getFullYear()} Qalmar</p>
             <p>
               Desarrollado por{' '}
@@ -148,7 +160,6 @@ export default async function PublicLayout({ children }: { children: ReactNode }
         </div>
       </footer>
 
-      {/* WhatsApp floating button */}
       <a
         href={whatsappHref('Estoy en su tienda, necesito asesoramiento')}
         target="_blank"
