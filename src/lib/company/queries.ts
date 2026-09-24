@@ -17,8 +17,8 @@ export interface CompanySettings {
 
 const COMPANY_KEY = 'company.settings'
 
-export const WHATSAPP_DISPLAY = '+54 9 291 402-0624'
-export const WHATSAPP_E164 = '5492914020624'
+export const WHATSAPP_DISPLAY = '+54 9 291 405-1085'
+export const WHATSAPP_E164 = '5492914051085'
 export const COMPANY_ADDRESS = 'Ingeniero Luiggi 872'
 export const COMPANY_CITY = 'Bahía Blanca'
 export const COMPANY_PROVINCE = 'Buenos Aires'
